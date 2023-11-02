@@ -1,0 +1,75 @@
+name: Create PR for All Repos
+
+on:
+  workflow_dispatch:
+  workflow_call:
+    secrets:
+      APP_ID:
+        required: true
+        description: 'Applications ID'
+      PRIVATE_KEY:
+        required: true
+        description: 'Applications Private Key'
+    inputs:
+      files:
+        description: 'Files to sync'
+        type: string
+        required: true
+
+jobs:
+  create-change-artifact:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: ${{ github.event.inputs.files }}
+      - uses: actions/upload-artifact@v3
+        with:
+          name: change-artifact
+          path: .
+  get-org-repos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.event.organization.login }}
+      - uses: austenstone/get-org-repos@main
+        with:
+          github-token: ${{ steps.app-token.outputs.token }}
+        id: get-org-repos
+    outputs:
+      repos: ${{ steps.get-org-repos.outputs.repos }}
+  sync:
+    needs: [create-change-artifact, get-org-repos]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo: ${{ fromJson(needs.get-org-repos.outputs.repos) }}
+      fail-fast: false
+    steps:
+      - uses: actions/create-github-app-token@v1
+        id: app-token
+        with:
+          app-id: ${{ vars.APP_ID }}
+          private-key: ${{ secrets.PRIVATE_KEY }}
+          owner: ${{ github.event.organization.login }}
+          repositories: ${{ matrix.repo }}
+      - uses: actions/checkout@v3
+        with:
+          repository: ${{ github.event.organization.login }}/${{ matrix.repo }}
+          token: ${{ steps.app-token.outputs.token }}
+      - uses: actions/download-artifact@v3
+        with:
+          name: change-artifact
+          path: .github
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          branch: auto-update-bot/${{ github.sha }}
+          create_branch: true
+          push_options: --force
+      - run: gh pr create --fill
+        env:
+          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}

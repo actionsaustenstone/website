@@ -1,0 +1,18 @@
+name: Node CI/CD
+on:
+  workflow_call:
+    inputs:
+      context:
+        description: "The GitHub context"
+        type: string
+        required: false
+
+jobs:
+  cicd:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actionsaustenstone/.github/.github/actions/node-package-ci@main
+      - uses: actionsaustenstone/.github/.github/actions/node-package-cd@main
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+        if: fromJson(inputs.context).event_name == 'release'

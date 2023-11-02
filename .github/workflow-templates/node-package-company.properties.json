@@ -1,0 +1,7 @@
+{
+    "name": "Node Package",
+    "description": "Build, test, and publish a Node.js package",
+    "iconName": "octocat",
+    "categories": ["Javascript", "Node"],
+    "filePatterns": ["package.json$"]
+}

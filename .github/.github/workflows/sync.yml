@@ -1,0 +1,20 @@
+name: Sync
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * *'
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/.github/dependabot.yml'
+
+jobs:
+  sync:
+    uses: actionsaustenstone/.github/.github/workflows/push-to-all-repos.yml@main
+    with:
+      files: |
+        .github/dependabot.yml
+    secrets:
+      APP_ID: ${{ vars.APP_ID }}
+      PRIVATE_KEY: ${{ secrets.PRIVATE_KEY }}
