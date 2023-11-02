@@ -5,5 +5,9 @@ const resultElement = document.getElementById('result');
 number.addEventListener('change', () => {
   const value = number.value;
   const result = fibonacci(value);
-  resultElement.innerHTML = `The fibonacci of ${value} is ${result}`;
+  if (!isNaN(value)) {
+    resultElement.innerHTML = `The fibonacci of ${value} is ${result}`;
+  } else {
+    resultElement.innerHTML = 'Please enter a number';
+  }
 });
