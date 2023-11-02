@@ -8,4 +8,4 @@ on:
 
 jobs:
   deploy:
-    uses: actionsaustenstone/.github/.github/workflows/node-package.yml@main
+    uses: actionsaustenstone/.github/.github/workflows/github-pages-static.yml@main
