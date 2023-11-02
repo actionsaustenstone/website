@@ -1,3 +1,9 @@
 import { fibonacci } from '@actionsaustenstone/math-package/src/index.js'
 
-console.log(fibonacci(10))
+const number = document.getElementById('number');
+const value = number.value;
+
+const result = fibonacci(value);
+
+const resultElement = document.getElementById('result');
+resultElement.innerHTML = result;
