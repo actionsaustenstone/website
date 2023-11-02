@@ -6,4 +6,4 @@ const value = number.value;
 const result = fibonacci(value);
 
 const resultElement = document.getElementById('result');
-resultElement.innerHTML = result;
+resultElement.innerHTML = `The fibonacci of ${value} is ${result}`;
