@@ -8,3 +8,5 @@ jobs:
   deploy:
     uses: actionsaustenstone/.github/.github/workflows/github-pages-static.yml@main
     secrets: inherit
+    with:
+      path: dist

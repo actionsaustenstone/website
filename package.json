@@ -2,10 +2,10 @@
   "name": "website",
   "version": "1.0.0",
   "description": "A GitHub Pages website",
-  "main": "index.js",
-  "type": "commonjs",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,9 @@
   "homepage": "https://github.com/actionsaustenstone/website#readme",
   "dependencies": {
     "@actionsaustenstone/math-package": "^3.0.0"
+  },
+  "devDependencies": {
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }
