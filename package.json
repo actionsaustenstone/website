@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "A GitHub Pages website",
   "main": "index.js",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/actionsaustenstone/website/issues"
   },
-  "homepage": "https://github.com/actionsaustenstone/website#readme"
+  "homepage": "https://github.com/actionsaustenstone/website#readme",
+  "dependencies": {
+    "@actionsaustenstone/math-package": "^3.0.0"
+  }
 }
