@@ -1,0 +1,11 @@
+name: CICD
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    uses: actionsaustenstone/.github/.github/workflows/node-package.yml@main
